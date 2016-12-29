@@ -58,13 +58,21 @@ public class HttpEndpointBasedTokenMapSupplier extends AbstractTokenMapSupplier 
 
     public HttpEndpointBasedTokenMapSupplier(String url, int port) {
 	super(port);
-
-	/**
-	 * If no port is passed means -1 then we will substitute to defaultPort
-	 * else the passed one.
-	 */
-	url = url.replace("{port}", (port > -1) ? Integer.toString(port) : Integer.toString(defaultPort));
-	serverUrl = url;
+	serverUrl = transformUrl(url,port);
+    }
+    
+    public HttpEndpointBasedTokenMapSupplier(String url, int port,String localDatacenter,String localRack) {
+        super(port,localDatacenter,localRack);
+        serverUrl = transformUrl(url,port);
+    }
+    
+    /**
+     * If no port is passed means -1 then we will substitute to defaultPort
+     * else the passed one.
+     */
+    private static String transformUrl(String url,int port){
+        url = url.replace("{port}", (port > -1) ? Integer.toString(port) : Integer.toString(defaultPort));
+        return url;
     }
 
     @Override
