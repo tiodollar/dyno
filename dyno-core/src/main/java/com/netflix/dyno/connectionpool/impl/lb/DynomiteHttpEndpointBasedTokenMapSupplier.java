@@ -28,6 +28,10 @@ public class DynomiteHttpEndpointBasedTokenMapSupplier extends HttpEndpointBased
     public DynomiteHttpEndpointBasedTokenMapSupplier() {
         super(DEFAULT_URL,DEFAULT_PORT);
     }
+    
+    public DynomiteHttpEndpointBasedTokenMapSupplier(String localDatacenter, String localRack) {
+        super(DEFAULT_URL,DEFAULT_PORT,localDatacenter,localRack);
+    }
 
     public DynomiteHttpEndpointBasedTokenMapSupplier(int port) {
         super(port);
