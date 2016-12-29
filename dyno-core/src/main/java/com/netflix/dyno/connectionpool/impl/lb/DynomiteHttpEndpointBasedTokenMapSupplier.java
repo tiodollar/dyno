@@ -15,26 +15,29 @@ import com.netflix.dyno.connectionpool.impl.lb.HttpEndpointBasedTokenMapSupplier
 
 /**
  * 
- * Abstract class to dynomite api
+ * Class to dynomite api REST
  * 
  */
-public class CloudHttpEndpointBasedTokenMapSupplier extends HttpEndpointBasedTokenMapSupplier {
+public class DynomiteHttpEndpointBasedTokenMapSupplier extends HttpEndpointBasedTokenMapSupplier {
 
-    private static final Logger Logger = LoggerFactory.getLogger(CloudHttpEndpointBasedTokenMapSupplier.class);
+    private static final Logger Logger = LoggerFactory.getLogger(DynomiteHttpEndpointBasedTokenMapSupplier.class);
+    
+    private static final String DEFAULT_URL = "http://{hostname}:{port}/cluster_describe";
+    private static final Integer DEFAULT_PORT = 22222;
 
-    public CloudHttpEndpointBasedTokenMapSupplier() {
-        super();
+    public DynomiteHttpEndpointBasedTokenMapSupplier() {
+        super(DEFAULT_URL,DEFAULT_PORT);
     }
 
-    public CloudHttpEndpointBasedTokenMapSupplier(int port) {
+    public DynomiteHttpEndpointBasedTokenMapSupplier(int port) {
         super(port);
     }
     
-    public CloudHttpEndpointBasedTokenMapSupplier(String url, int port) {
+    public DynomiteHttpEndpointBasedTokenMapSupplier(String url, int port) {
         super(url, port);
     }
 
-    public CloudHttpEndpointBasedTokenMapSupplier(String url, int port, String localDatacenter, String localRack) {
+    public DynomiteHttpEndpointBasedTokenMapSupplier(String url, int port, String localDatacenter, String localRack) {
         super(url, port,localDatacenter,localRack);
     }
 
@@ -95,8 +98,6 @@ public class CloudHttpEndpointBasedTokenMapSupplier extends HttpEndpointBasedTok
                         jnode.put("hostname", serverHost);
                         jnode.put("rack", rackName);
                         jnode.put("ip", serverHost);
-                        // FIXME: Not suported yet, because dynomite api return the wrong port
-                        // jnode.put("port", serverPort);
                         jnode.put("zone", rackName);
                         jnode.put("dc", datacenter);
                         ja.add(jnode);
